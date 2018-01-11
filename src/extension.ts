@@ -7,7 +7,6 @@ import * as child_process from 'child_process';
 import * as path from 'path';
 import {
   commands,
-  DocumentFilter,
   ExtensionContext,
   window,
   workspace
@@ -18,20 +17,17 @@ import {
   RevealOutputChannelOn,
   ServerOptions
 } from 'vscode-languageclient';
-
 import { InsertType } from './commands/insertType';
 import {
-  registerTypeHover,
-  ShowType,
+  ShowTypeCommand,
   ShowTypeHover,
-} from './commands/showTypeFix';
-// } from './commands/showType';
+} from './commands/showType';
 import { DocsBrowser } from './docsBrowser';
 
 export async function activate(context: ExtensionContext) {
   try {
     // Check if hie is installed.
-    if (! await isHieInstalled()) {
+    if (!await isHieInstalled()) {
       // TODO: Once haskell-ide-engine is on hackage/stackage, enable an option to install it via cabal/stack.
       const notInstalledMsg: string =
         'hie executable missing, please make sure it is installed, see github.com/haskell/haskell-ide-engine.';
@@ -91,10 +87,11 @@ function activateNoHieCheck(context: ExtensionContext) {
   const langClient = new LanguageClient('Language Server Haskell', serverOptions, clientOptions);
 
   context.subscriptions.push(InsertType.registerCommand(langClient));
-  ShowType.registerCommand(langClient).forEach(x => context.subscriptions.push(x));
 
-  if (workspace.getConfiguration('languageServerHaskell').showTypeForSelection) {
-    context.subscriptions.push(registerTypeHover(langClient));
+  ShowTypeCommand.registerCommand(langClient).forEach(x => context.subscriptions.push(x));
+
+  if (workspace.getConfiguration('languageServerHaskell').showTypeForSelection.onHover) {
+    context.subscriptions.push(ShowTypeHover.registerTypeHover(langClient));
   }
 
   // context.subscriptions.push(
@@ -120,14 +117,15 @@ function activateNoHieCheck(context: ExtensionContext) {
   context.subscriptions.push(disposable);
 }
 
-function isHieInstalled(): Promise<boolean> {
-  return new Promise((resolve, reject) => {
+async function isHieInstalled(): Promise<boolean> {
+  return new Promise<boolean>((resolve, reject) => {
     const cmd: string = ( process.platform === 'win32' ) ? 'where hie' : 'which hie';
     child_process.exec(cmd, (error, stdout, stderr) => resolve(!error));
   });
 }
 
-function registerHiePointCommand(langClient: LanguageClient, name: string, command: string, context: ExtensionContext) {
+async function registerHiePointCommand(langClient: LanguageClient, name: string, command: string,
+                                       context: ExtensionContext) {
   const cmd2 = commands.registerTextEditorCommand(name, (editor, edit) => {
     const cmd = {
       command,
@@ -147,30 +145,3 @@ function registerHiePointCommand(langClient: LanguageClient, name: string, comma
   });
   context.subscriptions.push(cmd2);
 }
-
-// async function registerHiePointCommand(langClient: LanguageClient,
-//  name: string, command: string, context: ExtensionContext) {
-//   const cmd2 = commands.registerTextEditorCommand(name, (editor, edit) => {
-//     const cmd = {
-//       command,
-//       arguments: [
-//         {
-//           file: editor.document.uri.toString(),
-//           pos: editor.selections[0].active,
-//         },
-//       ],
-//     };
-//     try {
-//       const hints = await langClient.sendRequest('workspace/executeCommand', cmd);
-//       return true;
-//     } catch (e) {
-//       console.error(e);
-//     }
-//     // langClient.sendRequest('workspace/executeCommand', cmd).then(hints => {
-//     //   return true;
-//     // }, e => {
-//     //   console.error(e);
-//     // });
-//   });
-//   context.subscriptions.push(cmd2);
-// }
