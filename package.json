@@ -189,7 +189,21 @@
                     "group": "HaRe@1"
                 }
             ]
-        }
+        },
+        "snippets": [
+            {
+                "language": "haskell",
+                "path": "./snippets/haskell.json"
+            },
+            {
+                "language": "haskell",
+                "path": "./snippets/cabal.json"
+            }
+            {
+                "language": "haskell",
+                "path": "./snippets/stack.json"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile && npm run tslint",

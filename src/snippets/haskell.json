@@ -1,0 +1,149 @@
+{
+  "$schema": "vscode://schemas/snippets",
+	"Language Extension": {
+		"prefix": "lang",
+		"body": [
+			"{-# LANGUAGE ${1|DataKinds,PolyKinds,TypeInType,OverlappingInstances,IncoherentInstances,UndecidableInstances,Arrows,DisambiguateRecordFields,ForeignFunctionInterface,Generics,DeriveGeneric,ImplicitParams,NoImplicitPrelude,NoMonomorphismRestriction,NoNPlusKPatterns,NoMonoPatBinds,RelaxedPolyRec,ExtendedDefaultRules,OverloadedStrings,GADTs,TypeFamilies,ScopedTypeVariables,MonoLocalBinds,TemplateHaskell,QuasiQuotes,BangPatterns,CPP,PatternGuards,ViewPatterns,UnicodeSyntax,MagicHash,NewQualifiedOperators,ExplicitForAll,PolymorphicComponents,Rank2Types,RankNTypes,ImpredicativeTypes,ExistentialQuantification,KindSignatures,EmptyDataDecls,ParallelListComp,TransformListComp,UnliftedFFITypes,LiberalTypeSynonyms,TypeOperators,RecursiveDo,PArr,RecordWildCards,NamedFieldPuns,DisambiguateRecordFields,UnboxedTuples,StandaloneDeriving,DeriveDataTypeable,GeneralizedNewtypeDeriving,TypeSynonymInstances,FlexibleContexts,FlexibleInstances,ConstrainedClassMethods,MultiParamTypeClasses,FunctionalDependencies,PackageImports|} #-}"
+		],
+		"description": "Insert a Language Extension Pragma"
+	},
+	"import qualified": {
+		"prefix": "import",
+		"description": "import qualified module as",
+		"body": "import qualified $1 as $2"
+	},
+	"import as": {
+		"prefix": "import",
+		"description": "import module as",
+		"body": "import $1 as $2"
+	},
+	"import": {
+		"prefix": "import",
+		"description": "import module",
+		"body": "import $1"
+		// "body": "import ${1|qualified,nope|} $2 as $3"
+	},
+	"default": {
+		"prefix": "default",
+		"body": "default ($1)",
+		"description": "Set default data types for literals"
+  },
+  "let statement": {
+    "prefix": "let"
+    "body": [
+      "let \t$1",
+      "\t$2",
+      "in $3"
+    ]
+  }
+	"case expression": {
+		"prefix": "case",
+		"body": [
+			"case ${1:a} of",
+			"\tLeft -> this",
+			"\tRight -> that"
+			// "| $3"
+		],
+		"description": "Insert a case expression"
+	},
+	"if/else expression": {
+		"prefix": "if",
+		"body": [
+			"case ${1:a} of",
+			"\tLeft -> this",
+			"\tRight -> that"
+			// "| $3"
+		],
+		"description": "if/else expression"
+	},
+	"deriving - standalone": {
+		"prefix": "deriving",
+		"body": "deriving instance ${1|Show,Eq,Ord,Other|} ${2:m} => $1 $2",
+		"description": "Insert a standalone deriving declaration"
+	},
+	"comment header": {
+		"prefix": "header",
+		"description": "A Heading Block",
+		"body": [
+			"-- *************************************************",
+			"-- EXPERIMENTING WITH REFLECTION",
+			"-- *************************************************"
+		]
+	},
+	"instance": {
+		"prefix": "instance",
+		"body": [
+			"instance ${1|Show, Eq, Ord, Other|} ${2: m} => $1 $2 where",
+			"\t$0"
+		],
+		"description": "declare an instance"
+	},
+	"Ordinary Data Type": {
+		"prefix": "data",
+		"body": [
+			"data ${1:a} = ${1:a} $2"
+			// "| $3"
+		],
+		"description": "Insert a new data type definition"
+	},
+	"GADT": {
+		"prefix": "data",
+		"body": [
+			"data ${1:Thing} where",
+			"${2:Thing} :: ${3:Thing}"
+		],
+		"description": "Insert a new GADT data type definition"
+	},
+	"main declaration": {
+		"prefix": "main",
+		"description": "Main Function declaration",
+		"body": [
+			"main :: IO ()",
+			"main = print \"Hello World\""
+		]
+	},
+	"module haddock declaration": {
+		"prefix": "had",
+		"description": "A description of the module and other fields that would be displayed at the top of any generated haddock documentation",
+		"body": [
+			"{-|",
+				// "Module      : $TM_DIRECTORY/$TM_FILENAME_BASE",
+				"Module      : $TM_FILENAME_BASE",
+				"Description : ${2:A brief description}",
+				"Copyright   : (c) Some Guy, 2018",
+				"License     : MIT",
+				"Maintainer  : ${3:sample@email.com}",
+				"Stability   : ${4:experimental}",
+				"Portability : POSIX",
+				"\n",
+				"${5:Here is a longer description of this module}",
+				"-}"
+		]
+	},
+	"module declaration": {
+		"prefix": "mod",
+		"description": "Module declaration",
+		"body": [
+			"module ${1:$TM_DIRECTORY.$TM_FILENAME_BASE} () where",
+			"$0"
+		]
+	},
+	"stack script": {
+		"prefix": "script",
+		"description": "Setup the skeleton of a standard stack script",
+		"body": [
+			"#!/usr/bin/env stack",
+			"{-  stack",
+				"\t--install-ghc",
+				"\t--resolver ${$1}",
+				"\t--stack-yaml $TM_FILENAME_BASE",
+				"\trunghc",
+				"\t--package $TM_FILE_NAME_BASE",
+			"-}\n\n",
+			"module $TM_FILE_NAME_BASE where\n",
+			"import Protolude\n",
+			"main :: IO ()",
+			"main = print \"Do Something...\""
+		]
+	}
+}
