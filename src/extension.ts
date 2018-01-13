@@ -94,18 +94,18 @@ function activateNoHieCheck(context: ExtensionContext) {
     context.subscriptions.push(ShowTypeHover.registerTypeHover(langClient));
   }
 
-  // context.subscriptions.push(
-  //   // NOTE: This isnt implemented yet :-\
-  //   // https://github.com/Microsoft/vscode/pull/36476/files
-  //   workspace.onDidChangeConfiguration((e) => {
-  //   // workspace.onDidChangeConfiguration((e: ConfigurationChangeEvent) => {
-  //     // // tslint:disable-next-line
-  //     // console.log(`CONFIGURATION CHANGED!! `, e);
-  //     // const change = e.affectsConfiguration('languageServerHaskell');
-  //     // // tslint:disable-next-line
-  //     // console.log(`Changed? `, change);
-  //   })
-  // );
+  context.subscriptions.push(
+    // NOTE: This isnt implemented yet :-\
+    // https://github.com/Microsoft/vscode/pull/36476/files
+    workspace.onDidChangeConfiguration((e) => {
+    // workspace.onDidChangeConfiguration((e: ConfigurationChangeEvent) => {
+      // // tslint:disable-next-line
+      // console.log(`CONFIGURATION CHANGED!! `, e);
+      // const change = e.affectsConfiguration('languageServerHaskell');
+      // // tslint:disable-next-line
+      // console.log(`Changed? `, change);
+    })
+  );
 
   registerHiePointCommand(langClient, 'hie.commands.demoteDef', 'hare:demote', context);
   registerHiePointCommand(langClient, 'hie.commands.liftOneLevel', 'hare:liftonelevel', context);

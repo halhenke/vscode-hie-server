@@ -82,37 +82,37 @@ const getCmd = editor => ({
   }],
 });
 
-// const typeFormatter = (typeString: string): MarkedString => {
-//   // const ms = new MarkedString();
-//   const ms = [];
-//   // definition?
-//   let def = typeString.split('::').map(s => s.trim());
-//   if (def.length > 1) {
-//     ms.push(`**${def[0]}** :: `);
-//     def.shift();
-//   }
-//   // context?
-//   def = typeString.split('=>').map(s => s.trim());
-//   if (def.length > 1) {
-//     ms.push(`*${def[0]}* => `);
-//     def.shift();
-//   }
-//   // Process rest...
-//   def = typeString.split('->').map(s => s.trim());
-//   if (def.length === 1 && def[0] === '') {
-//     return;
-//   }
-//   if (def.length >= 1) {
-//     ms.push(def.map(s => `**${s}**`).join(' -> '));
-//   }
-//   return ms.join();
-//   // while def.length >= 1 {
-//   //   if (def === '') {
-//   //     return;
-//   //   }
-//   //   ms.push(def.map(s => `*${s}*`).join(' -> '))
-//   // }
-// };
+const typeFormatter = (typeString: string): MarkedString => {
+  // const ms = new MarkedString();
+  const ms = [];
+  // definition?
+  let def = typeString.split('::').map(s => s.trim());
+  if (def.length > 1) {
+    ms.push(`**${def[0]}** :: `);
+    def.shift();
+  }
+  // context?
+  def = typeString.split('=>').map(s => s.trim());
+  if (def.length > 1) {
+    ms.push(`*${def[0]}* => `);
+    def.shift();
+  }
+  // Process rest...
+  def = typeString.split('->').map(s => s.trim());
+  if (def.length === 1 && def[0] === '') {
+    return;
+  }
+  if (def.length >= 1) {
+    ms.push(def.map(s => `**${s}**`).join(' -> '));
+  }
+  return ms.join();
+  // while def.length >= 1 {
+  //   if (def === '') {
+  //     return;
+  //   }
+  //   ms.push(def.map(s => `*${s}*`).join(' -> '))
+  // }
+};
 
 export namespace ShowTypeCommand {
   'use strict';
