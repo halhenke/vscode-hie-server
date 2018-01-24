@@ -32,6 +32,7 @@ const HASKELL_MODE: DocumentFilter = {
 
 // Cache same selections...
 const blankRange = new Range(0, 0, 0, 0);
+let lastRangeList = null;
 let lastRange = blankRange;
 let lastType = '';
 
@@ -48,6 +49,7 @@ async function getTypes({client, editor}): Promise<[Range, string]> {
     const [rng, typ] = chooseRange(editor.selection, ranges);
     lastRange = rng;
     lastType = typ;
+    lastRangeList = arr;
     return [rng, typ];
   } catch (e) {
     console.error(e);
@@ -61,6 +63,25 @@ async function getTypes({client, editor}): Promise<[Range, string]> {
  * @returns {[Range, string]}
  */
 const chooseRange = (sel: Selection, rngs: Array<[Range, string]>): [Range, string] => {
+    const curr = rngs.findIndex(([rng, typ]) => rng.contains(sel));
+
+    // If we dont find selection start/end in ranges then
+    // return the type matching the smallest selection range
+    if (curr === -1) {
+      // NOTE: not sure this should happen...
+      return rngs[0];
+    } else {
+      return rngs[curr];
+    }
+};
+
+/**
+ * Increase or decrease the selected range in the editor and the corresponding type based on stored server response
+ * @param  {Selection} sel - selected text in editor
+ * @param  {Array<[Range, string]>} rngs - the type analysis from the server
+ * @returns {[Range, string]}
+ */
+const changeRange = (sel: Selection, rngs: Array<[Range, string]>): [Range, string] => {
     const curr = rngs.findIndex(([rng, typ]) => rng.contains(sel));
 
     // If we dont find selection start/end in ranges then
