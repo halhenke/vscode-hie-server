@@ -40,8 +40,8 @@
 		"prefix": "case",
 		"body": [
 			"case ${1:a} of",
-			"\tLeft -> this",
-			"\tRight -> that"
+			"\t${Left} -> ${this}",
+			"\t${Right} -> ${that}"
 			// "| $3"
 		],
 		"description": "Insert a case expression"
@@ -70,36 +70,88 @@
 			"-- *************************************************"
 		]
 	},
+	"do": {
+		"prefix": "do",
+		"body": [
+				"do",
+				"\t$0",
+				"\t${1:return value}"
+		],
+		"description": "Do notation snippet."
+	},
 	"instance": {
 		"prefix": "instance",
 		"body": [
 			"instance ${1|Show, Eq, Ord, Other|} ${2: m} => $1 $2 where",
+			"\t${3:function} = ${4:id}",
 			"\t$0"
 		],
-		"description": "declare an instance"
+		"description": "Implement a typeclass instance"
 	},
-	"Ordinary Data Type": {
+	"data - Simple ADT": {
 		"prefix": "data",
 		"body": [
-			"data ${1:a} = ${1:a} $2"
-			// "| $3"
+			"data ${1:Foo} = $1 ${2|Type,''|}",
+			"\t| $0"
 		],
 		"description": "Insert a new data type definition"
 	},
-	"GADT": {
+	"data - Polymorphic ADT": {
+		"prefix": "data",
+		"body": [
+			"data ${1:Foo} ${2:a} = $1 $2",
+			"\t| $0"
+		],
+		"description": "Insert a new higher kinded data type definition"
+	},
+	"data - GADT syntax": {
 		"prefix": "data",
 		"body": [
 			"data ${1:Thing} where",
-			"${2:Thing} :: ${3:Thing}"
+			"\t${2:Thing} :: ${3:Thing}"
 		],
 		"description": "Insert a new GADT data type definition"
+	},
+	"Function": {
+		"prefix": "fun",
+		"body": [
+				"${1:name} :: ${type1:Int} -> ${type2:Int}",
+				"$1 ${val} = ${expr1}",
+				"$1 ${val2:_} = ${expr2}"
+		],
+		"description": "Function declaration snippet."
+	},
+	"let": {
+		"prefix": "let",
+		"body": [
+				"let",
+				"\t${1:name} = ${2:value}",
+				"in",
+				"\t${3:undefined} "
+		],
+		"description": "Let binding snippet."
+	},
+	"where": {
+			"prefix": "where",
+			"body": [
+					"where ${name} = ${value}"
+			],
+			"description": "Where binding snippet."
+	},
+	"where - statement": {
+			"prefix": "where",
+			"body": [
+					"${1:a} ${2:b} where",
+					"\t$1 = $3"
+			],
+			"description": "An expression with a where clause."
 	},
 	"main declaration": {
 		"prefix": "main",
 		"description": "Main Function declaration",
 		"body": [
 			"main :: IO ()",
-			"main = print \"Hello World\""
+			"main = ${0:putStrLn \"Hello World\"}"
 		]
 	},
 	"module haddock declaration": {
@@ -120,11 +172,21 @@
 				"-}"
 		]
 	},
-	"module declaration": {
+	"module declaration - (basic)": {
 		"prefix": "mod",
 		"description": "Module declaration",
 		"body": [
 			"module ${1:$TM_DIRECTORY.$TM_FILENAME_BASE} () where",
+			"$0"
+		]
+	},
+	"module declaration": {
+		"prefix": "mod",
+		"description": "Module declaration",
+		"body": [
+			"module ${1:$TM_DIRECTORY.$TM_FILENAME_BASE} (",
+			"\t${export:$1}",
+			") where",
 			"$0"
 		]
 	},
