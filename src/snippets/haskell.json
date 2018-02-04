@@ -3,7 +3,7 @@
 	"Language Extension": {
 		"prefix": "lang",
 		"body": [
-			"{-# LANGUAGE ${1|DataKinds,PolyKinds,TypeInType,OverlappingInstances,IncoherentInstances,UndecidableInstances,Arrows,DisambiguateRecordFields,ForeignFunctionInterface,Generics,DeriveGeneric,ImplicitParams,NoImplicitPrelude,NoMonomorphismRestriction,NoNPlusKPatterns,NoMonoPatBinds,RelaxedPolyRec,ExtendedDefaultRules,OverloadedStrings,GADTs,TypeFamilies,ScopedTypeVariables,MonoLocalBinds,TemplateHaskell,QuasiQuotes,BangPatterns,CPP,PatternGuards,ViewPatterns,UnicodeSyntax,MagicHash,NewQualifiedOperators,ExplicitForAll,PolymorphicComponents,Rank2Types,RankNTypes,ImpredicativeTypes,ExistentialQuantification,KindSignatures,EmptyDataDecls,ParallelListComp,TransformListComp,UnliftedFFITypes,LiberalTypeSynonyms,TypeOperators,RecursiveDo,PArr,RecordWildCards,NamedFieldPuns,DisambiguateRecordFields,UnboxedTuples,StandaloneDeriving,DeriveDataTypeable,GeneralizedNewtypeDeriving,TypeSynonymInstances,FlexibleContexts,FlexibleInstances,ConstrainedClassMethods,MultiParamTypeClasses,FunctionalDependencies,PackageImports|} #-}"
+			"{-# LANGUAGE ${1|AllowAmbiguousTypes,ApplicativeDo,Arrows,AutoDeriveTypeable,BangPatterns,CApiFFI,ConstrainedClassMethods,ConstraintKinds,CPP,DataKinds,DatatypeContexts,DefaultSignatures,DeriveAnyClass,DeriveDataTypeable,DeriveFoldable,DeriveFunctor,DeriveGeneric,DeriveLift,DeriveTraversable,DisambiguateRecordFields,DoRec,DuplicateRecordFields,EmptyCase,EmptyDataDecls,ExistentialQuantification,ExplicitForAll,ExplicitNamespaces,ExtendedDefaultRules,FlexibleContexts,FlexibleInstances,ForeignFunctionInterface,FunctionalDependencies,GADTs,GADTSyntax,GeneralizedNewtypeDeriving,GHCForeignImportPrim,ImplicitParams,ImpredicativeTypes,IncoherentInstances,InstanceSigs,InterruptibleFFI,KindSignatures,LambdaCase,LiberalTypeSynonyms,MagicHash,MonadComprehensions,MonoLocalBinds,MonoPatBinds,MultiParamTypeClasses,MultiWayIf,NamedFieldPuns,NegativeLiterals,NoImplicitPrelude,NoMonomorphismRestriction,NPlusKPatterns,NullaryTypeClasses,NumDecimals,OverlappingInstances,OverloadedLabels,OverloadedLists,OverloadedRecordFields,OverloadedStrings,PackageImports,ParallelArrays,ParallelListComp,PartialTypeSignatures,PatternGuards,PatternSynonyms,PolyKinds,PolymorphicComponents,PostfixOperators,QuasiQuotes,Rank2Types,RankNTypes,RebindableSyntax,RecordWildCards,RecursiveDo,RelaxedPolyRec,RoleAnnotations,Safe,SafeImports,ScopedTypeVariables,StandaloneDeriving,StaticPointers,Strict,StrictData,TemplateHaskell,TraditionalRecordSyntax,TransformListComp,Trustworthy,TupleSections,Typeable,TypeApplications,TypeFamilies,TypeHoles,TypeInType,TypeOperators,TypeSynonymInstances,UnboxedTuples,UndecidableInstances,UnicodeSyntax,UnliftedFFITypes,Unsafe,ViewPatterns|} #-}"
 		],
 		"description": "Insert a Language Extension Pragma"
 	},
@@ -29,13 +29,13 @@
 		"description": "Set default data types for literals"
   },
   "let statement": {
-    "prefix": "let"
+    "prefix": "let",
     "body": [
       "let \t$1",
       "\t$2",
       "in $3"
     ]
-  }
+  },
 	"case expression": {
 		"prefix": "case",
 		"body": [
