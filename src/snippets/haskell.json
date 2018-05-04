@@ -7,10 +7,16 @@
 		],
 		"description": "Insert a Language Extension Pragma"
 	},
+	"inline": {
+		"prefix": "inline",
+		"description": "inline function",
+		"body": "{-# INLINE $1 #-}"
+	},
 	"import qualified": {
 		"prefix": "import",
 		"description": "import qualified module as",
 		"body": "import qualified $1 as $2"
+		// "body": "import qualified $1 as ${1/(?:(?:([A-Z])+[a-z]+)*\\.?)+?/$1/g}"
 	},
 	"import as": {
 		"prefix": "import",
@@ -27,7 +33,12 @@
 		"prefix": "default",
 		"body": "default ($1)",
 		"description": "Set default data types for literals"
-  },
+	},
+	"lambda": {
+		"prefix": "lambda",
+		"description": "Anonymous function (single arg)",
+		"body": "\\x -> $1"
+	},
   "let statement": {
     "prefix": "let",
     "body": [
@@ -49,9 +60,9 @@
 	"if/else expression": {
 		"prefix": "if",
 		"body": [
-			"case ${1:a} of",
-			"\tLeft -> this",
-			"\tRight -> that"
+			"if ${1}",
+			"\tthen ${2}",
+			"\telse ${3}"
 			// "| $3"
 		],
 		"description": "if/else expression"
@@ -112,6 +123,13 @@
 		],
 		"description": "Insert a new GADT data type definition"
 	},
+	"newtype": {
+		"prefix": "newtype - record",
+		"body": [
+				"newtype ${name:nType} = ${name:nType} { un${name:nType} :: ${original:String} }"
+		],
+		"description": "Newtype declaration snippet."
+},
 	"Function": {
 		"prefix": "fun",
 		"body": [
